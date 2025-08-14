@@ -560,12 +560,15 @@ end
 mainThread = function()
     --addBlips() -- comentar caso nao queria os blips no mapa
     while true do
-        local idle = 500
+        local idle = 1000 -- Increased from 500ms to 1000ms for better performance
         if not inMenu then
             barberId, nearestBarbershop = getNearestBarberShop()
             if barberId then
                 nearBarber()
+                idle = 100 -- Reduce wait time when near shop for better responsiveness
             end
+        else
+            idle = 2000 -- Increase wait time when in menu to reduce unnecessary checks
         end
         Wait(idle)
     end
