@@ -651,8 +651,10 @@ mainThread = function()
                         end
                     end
                 end
+                Wait(1000) -- Increased from 500ms to 1000ms for better performance
+            else
+                Wait(2000) -- Increase wait time when in menu
             end
-            Wait(500)
         end
     end
 
@@ -660,13 +662,13 @@ mainThread = function()
     CreateThread(getNearestSkinshops)
 
     while true do
-        local idle = 500
+        local idle = 1000 -- Increased from 500ms to 1000ms for better performance
         local ped = PlayerPedId()
         local myCoords = GetEntityCoords(ped)
         if not inMenu then
             for skinShopId, v in pairs(nearestSkinshops) do
                 if v and v.coords and GetEntityHealth(ped) > 101 then 
-                    idle = 0 
+                    idle = 100 -- Reduced from 0 to 100ms for better performance
                     local coords = v.coords
                     local distance = #(myCoords - v.coords)
                     if IsDisabledControlJustPressed(0,38) and distance < 1.6 then
@@ -683,6 +685,8 @@ mainThread = function()
                     end
                 end
             end
+        else
+            idle = 2000 -- Increase wait time when in menu
         end
         Wait(idle)
     end
